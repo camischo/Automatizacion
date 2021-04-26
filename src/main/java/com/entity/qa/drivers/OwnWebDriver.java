@@ -1,4 +1,4 @@
-package com.conexia.qa.positiva.drivers;
+package com.entity.qa.drivers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
