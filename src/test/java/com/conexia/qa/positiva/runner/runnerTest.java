@@ -11,8 +11,7 @@ import net.serenitybdd.cucumber.CucumberWithSerenity;
         features = "src/test/resources/features/calculator.feature",
         snippets = SnippetType.CAMELCASE,
         monochrome = true,
-        glue = "com.conexia.qa.positiva.step_definitions",
-        tags = "@tag"
+        glue = "com.conexia.qa.positiva.step_definitions" //,tags = "@tag"
 )
 
 

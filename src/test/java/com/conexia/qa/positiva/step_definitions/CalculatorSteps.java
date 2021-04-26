@@ -4,6 +4,7 @@ import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 
 import com.entity.qa.drivers.OwnWebDriver;
 import com.entity.qa.questions.TheResult;
+
 import static org.hamcrest.Matchers.equalTo;
 
 import io.cucumber.java.en.Given;
@@ -21,7 +22,6 @@ public class CalculatorSteps {
 		OnStage.setTheStage(Cast.ofStandardActors());
 		OnStage.theActorCalled("Christian");
 		theActorInTheSpotlight().can(BrowseTheWeb.with(OwnWebDriver.withChrome().setURL("http://google.com")));
-		OnStage.theActorInTheSpotlight().attemptsTo(null);
 	}
 
 	@When("sum {int} and {int}")
