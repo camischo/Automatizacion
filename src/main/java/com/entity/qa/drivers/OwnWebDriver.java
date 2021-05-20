@@ -1,8 +1,6 @@
 package com.entity.qa.drivers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -13,13 +11,17 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 
-public class OwnWebDriver {
+import com.entity.qa.utils.Selenium;
+
+import net.thucydides.core.webdriver.DriverSource;
+
+public class OwnWebDriver implements DriverSource {
 
 	private WebDriver driver;
 
-	private static List<OwnWebDriver> listOwnWebDriver = new ArrayList<>();
-
-	public static OwnWebDriver withChrome() {
+	
+	@Override
+	public WebDriver newDriver() {
 		String downloadPath = "";
 		int timeOut = 20;
 		ChromeOptions chromeOptions = new ChromeOptions();
@@ -35,23 +37,19 @@ public class OwnWebDriver {
 		chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 		chromeOptions.setExperimentalOption("prefs", chromePrefs).setExperimentalOption("excludeSwitches",
 				new String[] { "enable-automation" });
-		//System.setProperty("webdriver.chrome.driver", "/home/cschottlaender/Librerias/WebDrivers/chromedriver");
-		System.setProperty("webdriver.chrome.driver", "C:\\Librerias\\WebDrivers\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", Selenium.parameters().getProperty("WebDrive"));
 
-		listOwnWebDriver.add(new OwnWebDriver());
-		listOwnWebDriver.get(listOwnWebDriver.size() - 1).driver = new ChromeDriver(chromeOptions);
-		listOwnWebDriver.get(listOwnWebDriver.size() - 1).driver.manage().timeouts().implicitlyWait(timeOut,
-				TimeUnit.SECONDS);
-		return listOwnWebDriver.get(listOwnWebDriver.size() - 1);
+		
+		driver = new ChromeDriver(chromeOptions);
+		driver.manage().timeouts().implicitlyWait(timeOut,TimeUnit.SECONDS);
+		return driver;
 	}
 
-	public WebDriver setURL(String url) {
-		driver.get(url);
-		return listOwnWebDriver.get(listOwnWebDriver.size() - 1).driver;
-	}
 
-	public static WebDriver getDriver() {
-		return listOwnWebDriver.get(listOwnWebDriver.size() - 1).driver;
+	@Override
+	public boolean takesScreenshots() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

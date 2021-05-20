@@ -1,39 +1,36 @@
 package com.conexia.qa.positiva.step_definitions;
 
-import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+import com.entity.qa.step.AviancaTravel;
 
-import com.entity.qa.drivers.OwnWebDriver;
-import com.entity.qa.questions.TheResult;
-
-import static org.hamcrest.Matchers.equalTo;
-
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import net.serenitybdd.screenplay.GivenWhenThen;
-import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actors.Cast;
-import net.serenitybdd.screenplay.actors.OnStage;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import net.thucydides.core.annotations.Steps;
 
 public class CalculatorSteps {
 
-	@Given("I init the calculator")
+	@Steps
+	AviancaTravel avianca;
+
+	@Given("^I start page avianca.com$")
 	public void iInitTheCalculator() {
-		OnStage.setTheStage(Cast.ofStandardActors());
-		OnStage.theActorCalled("Christian");
-		theActorInTheSpotlight().can(BrowseTheWeb.with(OwnWebDriver.withChrome().setURL("http://google.com")));
+		avianca.initPage();
+	}
+	
+	@When("^i fill out the form, book your flight one way (.+) and (.+) and (.+) and (.+) and (.+) and (.+) and (.+) and (.+)$")
+	public void iFillOutTheFormBookYourFlightOneWay(String from, String to, String date, String day, String howTravel,String adults, String childs, String babys) {
+		avianca.fillFormWay(from, to, date, day, howTravel, adults, childs, babys);
 	}
 
-	@When("sum {int} and {int}")
-	public void sumAnd(Integer int1, Integer int2) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
+	@When("i select your outbound flight")
+	public void iSelectYourOutboundFlight() {
+		avianca.selectSecondRow();
 	}
 
-	@Then("i see the result is {int}")
-	public void iSeeTheResultIs(Integer int1) {
-		// Write code here that turns the phrase above into concrete actions
-		theActorInTheSpotlight().should(GivenWhenThen.seeThat(TheResult.is(), equalTo(int1)));
+	@Then("i can see the flight")
+	public void iCanSeeTheFlight() {
+		avianca.canSeeTheFligh();
 	}
+
 
 }
